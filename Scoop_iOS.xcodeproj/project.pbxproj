@@ -13,6 +13,11 @@
 		CFEAB91F1DC0063600F0C01E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CFEAB91D1DC0063600F0C01E /* LaunchScreen.storyboard */; };
 		CFEAB9291DC0068500F0C01E /* IntroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFEAB9271DC0068500F0C01E /* IntroViewController.swift */; };
 		CFEAB92A1DC0068500F0C01E /* IntroViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CFEAB9281DC0068500F0C01E /* IntroViewController.xib */; };
+		CFEAB92C1DC00D6900F0C01E /* AnonymousTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFEAB92B1DC00D6900F0C01E /* AnonymousTableViewController.swift */; };
+		CFEAB9331DC00ECE00F0C01E /* AnonymousDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFEAB9311DC00ECE00F0C01E /* AnonymousDetailViewController.swift */; };
+		CFEAB9341DC00ECE00F0C01E /* AnonymousDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CFEAB9321DC00ECE00F0C01E /* AnonymousDetailViewController.xib */; };
+		CFEAB9381DC015CD00F0C01E /* AuthorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFEAB9361DC015CD00F0C01E /* AuthorViewController.swift */; };
+		CFEAB9391DC015CD00F0C01E /* AuthorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CFEAB9371DC015CD00F0C01E /* AuthorViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +29,11 @@
 		CFEAB9201DC0063600F0C01E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CFEAB9271DC0068500F0C01E /* IntroViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntroViewController.swift; sourceTree = "<group>"; };
 		CFEAB9281DC0068500F0C01E /* IntroViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IntroViewController.xib; sourceTree = "<group>"; };
+		CFEAB92B1DC00D6900F0C01E /* AnonymousTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnonymousTableViewController.swift; sourceTree = "<group>"; };
+		CFEAB9311DC00ECE00F0C01E /* AnonymousDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnonymousDetailViewController.swift; sourceTree = "<group>"; };
+		CFEAB9321DC00ECE00F0C01E /* AnonymousDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AnonymousDetailViewController.xib; sourceTree = "<group>"; };
+		CFEAB9361DC015CD00F0C01E /* AuthorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthorViewController.swift; sourceTree = "<group>"; };
+		CFEAB9371DC015CD00F0C01E /* AuthorViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AuthorViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -40,6 +50,7 @@
 		CFEAB9081DC0063600F0C01E = {
 			isa = PBXGroup;
 			children = (
+				CFEAB9351DC00EE800F0C01E /* Models */,
 				CFEAB9261DC0065500F0C01E /* Views */,
 				CFEAB9131DC0063600F0C01E /* Scoop_iOS */,
 				CFEAB9121DC0063600F0C01E /* Products */,
@@ -71,8 +82,20 @@
 			children = (
 				CFEAB9271DC0068500F0C01E /* IntroViewController.swift */,
 				CFEAB9281DC0068500F0C01E /* IntroViewController.xib */,
+				CFEAB92B1DC00D6900F0C01E /* AnonymousTableViewController.swift */,
+				CFEAB9311DC00ECE00F0C01E /* AnonymousDetailViewController.swift */,
+				CFEAB9321DC00ECE00F0C01E /* AnonymousDetailViewController.xib */,
+				CFEAB9361DC015CD00F0C01E /* AuthorViewController.swift */,
+				CFEAB9371DC015CD00F0C01E /* AuthorViewController.xib */,
 			);
 			name = Views;
+			sourceTree = "<group>";
+		};
+		CFEAB9351DC00EE800F0C01E /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -134,10 +157,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CFEAB9341DC00ECE00F0C01E /* AnonymousDetailViewController.xib in Resources */,
 				CFEAB91F1DC0063600F0C01E /* LaunchScreen.storyboard in Resources */,
 				CFEAB91C1DC0063600F0C01E /* Assets.xcassets in Resources */,
 				CFEAB91A1DC0063600F0C01E /* Main.storyboard in Resources */,
 				CFEAB92A1DC0068500F0C01E /* IntroViewController.xib in Resources */,
+				CFEAB9391DC015CD00F0C01E /* AuthorViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -149,6 +174,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				CFEAB9151DC0063600F0C01E /* AppDelegate.swift in Sources */,
+				CFEAB9381DC015CD00F0C01E /* AuthorViewController.swift in Sources */,
+				CFEAB9331DC00ECE00F0C01E /* AnonymousDetailViewController.swift in Sources */,
+				CFEAB92C1DC00D6900F0C01E /* AnonymousTableViewController.swift in Sources */,
 				CFEAB9291DC0068500F0C01E /* IntroViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -272,6 +300,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = Scoop_iOS/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "icapa.Scoop-iOS";
@@ -284,6 +314,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = Scoop_iOS/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "icapa.Scoop-iOS";

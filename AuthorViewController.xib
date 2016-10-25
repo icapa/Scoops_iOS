@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11201" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AuthorViewController" customModule="Scoop_iOS" customModuleProvider="target">
+            <connections>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xpb-Wd-0eF">
+                    <items>
+                        <barButtonItem title="Save" id="HiX-L0-gNn"/>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="Yer-au-pIo"/>
+                        <barButtonItem title="Add Localization" id="rON-bm-Mhw"/>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="fIW-aC-POj"/>
+                        <barButtonItem title="Publish" id="RQp-Gi-Ebq"/>
+                    </items>
+                </toolbar>
+                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="5p5-6J-XEn">
+                    <subviews>
+                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Post title" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="LAJ-WW-lKI">
+                            <nil key="textColor"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textInputTraits key="textInputTraits"/>
+                        </textField>
+                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Bej-BY-u5p">
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                        </textView>
+                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="GPS: Localization disabled" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="eJK-kA-pib">
+                            <nil key="textColor"/>
+                            <fontDescription key="fontDescription" type="italicSystem" pointSize="14"/>
+                            <textInputTraits key="textInputTraits"/>
+                        </textField>
+                    </subviews>
+                    <constraints>
+                        <constraint firstItem="Bej-BY-u5p" firstAttribute="leading" secondItem="5p5-6J-XEn" secondAttribute="leading" id="J1P-LJ-wDK"/>
+                        <constraint firstAttribute="trailing" secondItem="Bej-BY-u5p" secondAttribute="trailing" id="jRa-bm-O2R"/>
+                    </constraints>
+                </stackView>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="5p5-6J-XEn" secondAttribute="trailing" id="419-CH-4UZ"/>
+                <constraint firstAttribute="trailing" secondItem="5p5-6J-XEn" secondAttribute="trailing" id="7p9-vp-dEa"/>
+                <constraint firstItem="5p5-6J-XEn" firstAttribute="leading" secondItem="xpb-Wd-0eF" secondAttribute="leading" id="BHn-eB-iu7"/>
+                <constraint firstItem="5p5-6J-XEn" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="C2N-Lh-Xbu"/>
+                <constraint firstAttribute="bottom" secondItem="eJK-kA-pib" secondAttribute="bottom" constant="79" id="Fla-Gu-tXC"/>
+                <constraint firstItem="5p5-6J-XEn" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="NUN-OE-nfR"/>
+                <constraint firstItem="5p5-6J-XEn" firstAttribute="trailing" secondItem="xpb-Wd-0eF" secondAttribute="trailing" id="Uax-Gx-oNo"/>
+                <constraint firstItem="xpb-Wd-0eF" firstAttribute="top" secondItem="5p5-6J-XEn" secondAttribute="bottom" constant="35" id="xS7-Nx-Cdt"/>
+                <constraint firstItem="5p5-6J-XEn" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="83" id="zs8-OB-ifl"/>
+            </constraints>
+            <point key="canvasLocation" x="24.5" y="51.5"/>
+        </view>
+    </objects>
+</document>

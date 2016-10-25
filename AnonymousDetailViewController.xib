@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11201" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AnonymousDetailViewController" customModule="Scoop_iOS" customModuleProvider="target">
+            <connections>
+                <outlet property="labelAuthor" destination="h9f-Ad-lps" id="W2Q-Py-EPJ"/>
+                <outlet property="labelTitle" destination="IPK-yJ-HMI" id="o3u-Ci-Mtt"/>
+                <outlet property="segmentedRates" destination="BC8-zS-MyU" id="l0K-Kb-F6M"/>
+                <outlet property="textComplete" destination="Vwg-0h-Gig" id="2i4-dB-hQZ"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wQS-hP-Qfo">
+                    <constraints>
+                        <constraint firstAttribute="width" constant="100" id="F2M-gT-w4x"/>
+                    </constraints>
+                    <state key="normal" title="Rate Post"/>
+                    <connections>
+                        <action selector="rate:" destination="-1" eventType="touchUpInside" id="zGN-GQ-tg2"/>
+                    </connections>
+                </button>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Post Title" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IPK-yJ-HMI">
+                    <constraints>
+                        <constraint firstAttribute="height" constant="21" id="lNV-kw-OS9"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="21"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Author" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h9f-Ad-lps">
+                    <fontDescription key="fontDescription" type="italicSystem" pointSize="17"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vwg-0h-Gig">
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="392" id="7gb-Jv-b5r"/>
+                    </constraints>
+                    <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                </textView>
+                <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="BC8-zS-MyU">
+                    <constraints>
+                        <constraint firstAttribute="width" constant="121" id="SUb-bk-Ogx"/>
+                    </constraints>
+                    <segments>
+                        <segment title="1"/>
+                        <segment title="2"/>
+                        <segment title="3"/>
+                        <segment title="4"/>
+                        <segment title="5" width="23.399999999999999"/>
+                    </segments>
+                </segmentedControl>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="wQS-hP-Qfo" secondAttribute="bottom" id="4WP-uw-qj9"/>
+                <constraint firstItem="Vwg-0h-Gig" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="CzJ-ky-qjC"/>
+                <constraint firstItem="wQS-hP-Qfo" firstAttribute="centerX" secondItem="Vwg-0h-Gig" secondAttribute="centerX" id="Mv3-Cm-WKT"/>
+                <constraint firstItem="wQS-hP-Qfo" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="N5Y-Cd-8Fc"/>
+                <constraint firstItem="BC8-zS-MyU" firstAttribute="centerX" secondItem="wQS-hP-Qfo" secondAttribute="centerX" id="TOQ-p8-ddC"/>
+                <constraint firstItem="BC8-zS-MyU" firstAttribute="top" secondItem="Vwg-0h-Gig" secondAttribute="bottom" constant="68" id="X1E-Fz-QjH"/>
+                <constraint firstItem="h9f-Ad-lps" firstAttribute="top" secondItem="IPK-yJ-HMI" secondAttribute="bottom" constant="8" symbolic="YES" id="dwi-rK-0Bu"/>
+                <constraint firstItem="Vwg-0h-Gig" firstAttribute="leading" secondItem="IPK-yJ-HMI" secondAttribute="leading" id="hMb-et-eAg"/>
+                <constraint firstItem="wQS-hP-Qfo" firstAttribute="top" secondItem="Vwg-0h-Gig" secondAttribute="bottom" constant="96" id="haA-Bu-pG6"/>
+                <constraint firstItem="Vwg-0h-Gig" firstAttribute="leading" secondItem="h9f-Ad-lps" secondAttribute="leading" id="hgx-qJ-fQc"/>
+                <constraint firstItem="wQS-hP-Qfo" firstAttribute="centerX" secondItem="h9f-Ad-lps" secondAttribute="centerX" id="ira-3l-Kzt"/>
+                <constraint firstItem="Vwg-0h-Gig" firstAttribute="top" secondItem="h9f-Ad-lps" secondAttribute="bottom" constant="8" symbolic="YES" id="vPs-fX-zm3"/>
+                <constraint firstItem="wQS-hP-Qfo" firstAttribute="centerX" secondItem="IPK-yJ-HMI" secondAttribute="centerX" id="whm-0S-MCp"/>
+            </constraints>
+            <point key="canvasLocation" x="24.5" y="51.5"/>
+        </view>
+    </objects>
+</document>

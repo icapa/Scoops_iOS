@@ -1,27 +1,21 @@
 //
-//  IntroViewController.swift
+//  AnonymousDetailViewController.swift
 //  Scoop_iOS
 //
-//  Created by Iván Cayón Palacio on 25/10/16.
+//  Created by Iván Cayón Palacio on 26/10/16.
 //  Copyright © 2016 icapa. All rights reserved.
 //
 
 import UIKit
 
-class IntroViewController: UIViewController {
-
-    @IBAction func launchFacebook(_ sender: AnyObject) {
+class AnonymousDetailViewController: UIViewController {
+    @IBAction func rate(_ sender: AnyObject) {
     }
-    @IBAction func launchAnonymous(_ sender: AnyObject) {
-        
-        //let anonyDet = AnonymousDetailViewController(nibName: nil, bundle: nil)
-        //self.navigationController?.pushViewController(anonyDet, animated: true)
 
-        
-        let anonyVC = AnonymousTableViewController(nibName: nil, bundle: nil)
-        self.navigationController?.pushViewController(anonyVC, animated: true)
-        
-    }
+    @IBOutlet weak var segmentedRates: UISegmentedControl!
+    @IBOutlet weak var textComplete: UITextView!
+    @IBOutlet weak var labelAuthor: UILabel!
+    @IBOutlet weak var labelTitle: UILabel!
     override func viewDidLoad() {
         super.viewDidLoad()
 
