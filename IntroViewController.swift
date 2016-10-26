@@ -10,7 +10,24 @@ import UIKit
 
 class IntroViewController: UIViewController {
 
+    var client : MSClient = MSClient(applicationURL: URL(string: "https://icapa-mbass.azurewebsites.net")!)
+    
+    
+    // MARK: - Actions
+    
     @IBAction func launchFacebook(_ sender: AnyObject) {
+        // Nos autenticamos
+        if let _ = client.currentUser{
+            print("Client is authenticated!!")
+            self.launchAuthorView()
+        }
+        else{
+            doLoginInFacebook()
+            print("Saliendo de autenticar")
+        }
+        
+        
+        
     }
     @IBAction func launchAnonymous(_ sender: AnyObject) {
         
@@ -24,8 +41,9 @@ class IntroViewController: UIViewController {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+       
+        
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -43,5 +61,28 @@ class IntroViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     */
+       // MARK: - FacebookLogin
+    func doLoginInFacebook(){
+        client.login(withProvider: "facebook", parameters: nil, controller: self, animated: true)
+        { (user, error) in
+            if let _ = error {
+                print(error)
+                return
+            }else{
+                // Load writer view controller
+                DispatchQueue.main.async{
+                    self.title = "Authenticated client"
+                    self.launchAuthorView()
+                }
+                return
+            }
+            
+        }
+    }
+    
+    func launchAuthorView(){
+        let author = AutorTableViewController(client)
+        self.navigationController?.pushViewController(author, animated: true)
+    }
 
 }
