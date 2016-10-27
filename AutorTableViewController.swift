@@ -11,10 +11,13 @@ import UIKit
 
 
 
+
+
 class AutorTableViewController: UITableViewController {
 
     
-    var model : [Post]?
+    var model: [AuthorRecord]? = []
+    
     
     var client : MSClient?
     var segment : UISegmentedControl?
@@ -34,8 +37,8 @@ class AutorTableViewController: UITableViewController {
     override func viewWillAppear(_ animated: Bool) {
         
         //addFakePost()
-        addPosts()
-        
+        //addPosts()
+        readAuthorsTable(nil)
         
         super.viewWillAppear(true)
         segment  = UISegmentedControl(items: ["All","Published","Not Published"])
@@ -44,45 +47,100 @@ class AutorTableViewController: UITableViewController {
         self.navigationItem.titleView = segment
         segment?.addTarget(self, action: #selector (segmentedControlValueChanged), for:.valueChanged)
         
+        
+        
+        
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addPost))
         
     }
 
     
     //MARK: - Actions
+    
     func segmentedControlValueChanged(sender: AnyObject){
         let segment = sender as! UISegmentedControl
         print("Seleccionado: \(segment.selectedSegmentIndex)")
+        switch segment.selectedSegmentIndex {
+        case 0:
+            print("All")
+            readAuthorsTable(nil)
+            break;
+        case 1:
+            print("Published")
+            readAuthorsTable(true)
+            break;
+        default:
+            print("Not published")
+            readAuthorsTable(false)
+            break;
+            
+        }
     }
-    
+    func addPost(sender: AnyObject){
+        // Creamos un modelo vacío que valga
+        let fakeModel : AuthorRecord =
+            ["title":"" as AnyObject,
+             "author":"" as AnyObject,
+             "published":false as AnyObject,
+             "wantPublish":false as AnyObject,
+             "text":"" as AnyObject]
+        
+        
+        let detailVC = AuthorViewController(client!, model: fakeModel)
+        self.navigationController?.pushViewController(detailVC, animated: true)
+        
+        
+    }
     
     
    
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 0
+        if (model?.isEmpty)!{
+            return 0
+        }
+        return 1
+        
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return 0
+        if (model?.isEmpty)!{
+            return 0
+        }
+        return (model?.count)!
     }
 
-    /*
+    
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
+        
+        let cellId = "PostCell"
+        
+        var cell = tableView.dequeueReusableCell(withIdentifier: cellId)
 
-        // Configure the cell...
-
-        return cell
+        if cell == nil{
+            cell = UITableViewCell(style: .subtitle, reuseIdentifier: cellId)
+        }
+        
+        let item = model?[indexPath.row]
+        
+        cell?.textLabel?.text = (item?["title"] as! String)
+        cell?.detailTextLabel?.text = (item?["author"] as! String)
+        
+        return cell!
     }
-    */
-
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let item = model?[indexPath.row]
+        let detVC = AuthorViewController(client!, model: item!)
+        self.navigationController?.pushViewController(detVC, animated: true)
+    }
+    
+    
     /*
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
@@ -127,19 +185,60 @@ class AutorTableViewController: UITableViewController {
         // Pass the selected object to the new view controller.
     }
     */
-
+    //MARK: - BBDD functions
+    func readAuthorsTable(_ published: Bool?){
+        var query : Dictionary<String,String>?
+        
+        if (published != nil){
+            if published==true{
+                query = ["publish": "true"]
+            }
+            else{
+                query = ["publish" : "false"]
+            }
+            
+        }else{
+            query = nil
+        }
+        
+        client?.invokeAPI("authorposts", body: nil, httpMethod: "GET", parameters: query, headers: nil, completion: { (data, response, error) in
+            if let _ = error{
+                print(error)
+            }
+            else{
+                if !((self.model?.isEmpty)!){
+                    self.model?.removeAll()
+                }
+                
+                if let _ = data{
+                    print(data)
+                    let json = data as! [AuthorRecord]
+                    
+                    for item in json {
+                        self.model?.append(item)
+                    }
+                    DispatchQueue.main.async {
+                        self.tableView.reloadData()
+                    }
+                    
+                }
+            }
+        })
+        
+    }
+    
+    /*
     //MARK: - Help functions
     func addPosts(){
-        /*
-        let test = Post(_let: "titulo", text: "texto", photo: "photo", latitude: 0.0, longitude: 0.0, author: "autor", published: false, rate: 0.0, wantPublish: false, containerName: "containername", numberRates: 0)
-        */
-        
-        let jsonItem = [["author": "ivan"],
-                        ["title":"titulo"],
-                        ["text":"texto"]]
+        let json: Dictionary<String,String> = ["author":"ivan","title":"titulo","text":"texto"]
         
         
-        client?.invokeAPI("add", body: jsonItem, httpMethod: "POST", parameters: nil, headers: nil, completion: { (data, response, error) in
+        client?.invokeAPI("add",
+                          body: nil,
+                          httpMethod: "POST",
+                          parameters: json,
+                          headers: nil,
+                          completion: { (data, response, error) in
             if let _ = error{
                 print(error)
                 
@@ -150,33 +249,5 @@ class AutorTableViewController: UITableViewController {
     
         
     }
-    
-    //MARK: - Fake post
-    func addFakePost() {
-        
-        let tableMS = client?.table(withName: "Posts")
-        
-        tableMS?.insert(["title" : "titulo",
-                        "text" : "texto",
-                        "photo" : "foto",
-                        "latitude" : 0.0,
-                        "longitude" : 1.1,
-                        "author" : "ivan",
-                        "published" : false,
-                        "rate" : 2.2,
-                        "wantPublish" : false,
-                        "container" : "container",
-                        "numberRates" : 0
-            ])
-        { (result, error) in
-            
-            if let _ = error {
-                print(error)
-                return
-            }
-            //            self.readAllItemsInTable()
-            print(result)
-        }
-    }
-    
+     */
 }
