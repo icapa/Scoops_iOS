@@ -9,8 +9,11 @@
 import UIKit
 
 class AnonymousDetailViewController: UIViewController {
-    @IBAction func rate(_ sender: AnyObject) {
-    }
+    
+    var client : MSClient
+    var model : AuthorRecord?
+
+    
 
     @IBOutlet weak var segmentedRates: UISegmentedControl!
     @IBOutlet weak var textComplete: UITextView!
@@ -22,20 +25,75 @@ class AnonymousDetailViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    //MARK: - Init
+    init(_ client: MSClient){
+        self.client = client
+        super.init(nibName: nil, bundle: nil)
+        
+    }
+    init (_ client: MSClient, model : AuthorRecord){
+        self.client = client
+        self.model = model
+        super.init(nibName: nil, bundle: nil)
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
-    */
+    //MARK: - Life Cycle
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        syncViewWithModel()
+        
+    }
+    
+    
+   //MARK: - Sync
+    func syncViewWithModel(){
+        self.labelTitle.text = model?["title"] as! String?
+        self.labelAuthor.text = model?["author"] as! String?
+        self.textComplete.text = model?["text"] as! String!
+        let rate = model?["rate"] as? Int
+        if (rate != nil){
+            self.segmentedRates.selectedSegmentIndex = rate!-1
+        }else{
+            self.segmentedRates.selectedSegmentIndex = 0
+        }
+        
+        
+        
+    }
+    //MARK: - Actions
+    
+    @IBAction func rate(_ sender: AnyObject) {
+        print("Enviando valoracion \(segmentedRates.selectedSegmentIndex+1)")
+        ratePost(segmentedRates.selectedSegmentIndex+1)
+    }
+    
+    //MARK: - Rate new
+    func ratePost(_ rate: Int){
+        var params = Dictionary<String,String>()
+        
+        params = ["id" : model?["id"] as! String,
+                  "rate" : String.init(format: "%d", rate)]
+        
+        
+        
+        
+        
+        client.invokeAPI("rate", body: nil, httpMethod: "PUT", parameters: params, headers: nil) { (data, result, error) in
+            
+            if let _ = error {
+                print (error)
+            }else{
+                print(data)
+                // Habria que sincronizar, devolveria el estado y el valor de modelo
+                DispatchQueue.main.async {
+                    //let _ = self.navigationController?.popViewController(animated: true)
+                    print("SE HA HECHO BIEN EL POST")
+                }
+            }
+        }
 
+    }
 }

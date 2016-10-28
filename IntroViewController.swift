@@ -35,7 +35,7 @@ class IntroViewController: UIViewController {
         //self.navigationController?.pushViewController(anonyDet, animated: true)
 
         
-        let anonyVC = AnonymousTableViewController(nibName: nil, bundle: nil)
+        let anonyVC = AnonymousTableViewController(client)
         self.navigationController?.pushViewController(anonyVC, animated: true)
         
     }
