@@ -12,8 +12,10 @@ class AnonymousDetailViewController: UIViewController {
     
     var client : MSClient
     var model : AuthorRecord?
+    var blobClient : AZSCloudBlobClient?
 
     
+    @IBOutlet weak var postImage: UIImageView!
 
     @IBOutlet weak var segmentedRates: UISegmentedControl!
     @IBOutlet weak var textComplete: UITextView!
@@ -44,7 +46,7 @@ class AnonymousDetailViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         syncViewWithModel()
-        
+        getPhotoPost(model!)
     }
     
     
@@ -97,3 +99,61 @@ class AnonymousDetailViewController: UIViewController {
 
     }
 }
+
+//MARK: - Storage 
+
+extension AnonymousDetailViewController{
+    func getPhotoPost(_ post : AuthorRecord)  {
+        // Esta descarga la photo y la pone en el cuadro, si existe
+        let foto = post["photo"] as? String
+        
+        
+        
+        
+        
+        if foto != nil{
+            if !((foto?.isEmpty)!){
+                // Recogemos el blob
+                
+                let credentials = AZSStorageCredentials(accountName: "icapastorage",
+                                                        accountKey: "OypqXXmQZVCDfO340/VJQ4jvHf7yinX1QTIUnBwcx4CLWhgI59CvckjkOSnhEyPxvymAY0dMrAX9rVDs8VRSKg==")
+                
+                let account = try! AZSCloudStorageAccount(credentials: credentials, useHttps: true)
+                
+                blobClient = account.getBlobClient()
+                
+                
+                
+                let blobContainer = blobClient?.containerReference(fromName: "posts")
+                
+                let blob = AZSCloudBlockBlob(container: blobContainer!, name: foto!)
+                
+                blob.downloadToData(completionHandler: { (error, data) in
+                    if let _ = error {
+                        print(error)
+                        return
+                    }
+                    if let _ = data {
+                        
+                        let img = UIImage(data: data!)
+                        
+                        let imgRes = img?.resizeWith(width: self.postImage.bounds.width)
+                        
+                    
+                        print("Imagen leida OK")
+                        DispatchQueue.main.async {
+                            //
+                            print("Descargo la imagen \(img?.description)")
+                            self.postImage.image = imgRes!
+                        }
+                        
+                        
+                    }
+                })
+                
+            }
+        }
+    }
+    
+}
+

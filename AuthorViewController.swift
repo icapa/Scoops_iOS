@@ -15,6 +15,13 @@ class AuthorViewController: UIViewController {
 
     var client : MSClient
     var model : AuthorRecord?
+    
+    var blobClient : AZSCloudBlobClient?
+    
+    @IBOutlet weak var ratePostText: UILabel!
+    
+    @IBOutlet weak var imagePosts: UIImageView!
+    
     @IBOutlet weak var viewPostAuthor: UITextField!
     
     @IBOutlet weak var viewPostTitle: UITextField!
@@ -33,6 +40,24 @@ class AuthorViewController: UIViewController {
         }else{
             updatePost()
         }
+    }
+
+    @IBAction func addPhoto(_ sender: AnyObject) {
+        /* La foto */
+        
+        let picker = UIImagePickerController()
+        if UIImagePickerController.isCameraDeviceAvailable(.rear){
+            picker.sourceType = .camera
+        }else{
+            picker.sourceType = .photoLibrary
+        }
+        picker.delegate = self
+        self.present(picker, animated: true) {
+            print("No hago nada")
+        }
+        
+        
+        
     }
     @IBAction func publishAction(_ sender: AnyObject) {
         let pub = model?["published"] as! Bool
@@ -71,6 +96,12 @@ class AuthorViewController: UIViewController {
         super.viewWillAppear(animated)
         syncViewWithModel()
         
+        // Voy a probar
+       
+        getPhotoPost()
+        
+        
+        
     }
     
     // MARK: - Sync
@@ -78,7 +109,12 @@ class AuthorViewController: UIViewController {
         self.viewPostTitle.text = model?["title"] as! String?
         self.viewPostAuthor.text = model?["author"] as! String?
         self.viewPostText.text = model?["text"] as! String!
-        self.viewPostText.text = "fake text"
+        
+        let rateS = String.init(format: "Rate: %d/5", model?["rate"] as! Int)
+        
+        
+        self.ratePostText.text = rateS
+        
         let pub = model?["published"] as! Bool
         let want = model?["wantPublish"] as! Bool
         
@@ -128,10 +164,20 @@ class AuthorViewController: UIViewController {
         
     }
     func addPosts(){
+        
+        var photo : String=""
+        
+        if model?["photo"] != nil{
+            photo = model?["photo"] as! String
+        }
+
+        
         let json: Dictionary<String,String> =
             ["author":self.viewPostAuthor.text!,
              "title":self.viewPostTitle.text!,
-             "text":self.viewPostText.text]
+             "text":self.viewPostText.text,
+             "photo": photo
+        ]
         
         
         client.invokeAPI("add",
@@ -157,10 +203,18 @@ class AuthorViewController: UIViewController {
     func updatePost(){
         var params = Dictionary<String,String>()
         
+        // Puede que tenga imagen o no
+        var photo : String=""
+        
+        if model?["photo"] != nil{
+            photo = model?["photo"] as! String
+        }
+        
         params = ["id" : model?["id"] as! String,
                   "title": self.viewPostTitle.text!,
                   "author" : self.viewPostAuthor.text!,
-                  "text" : self.viewPostText.text
+                  "text" : self.viewPostText.text,
+                  "photo": photo
         ]
         
         
@@ -184,7 +238,99 @@ class AuthorViewController: UIViewController {
         }
         
     }
-
-
-   
 }
+
+//MARK: - Image Picker
+extension AuthorViewController: UIImagePickerControllerDelegate,UINavigationControllerDelegate{
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        self.dismiss(animated: true){}
+        let auxFoto = info[UIImagePickerControllerOriginalImage] as!  UIImage?
+        if (auxFoto != nil){
+            storageUploadImage(auxFoto!)
+        }
+    }
+}
+
+//MARK: - Storage
+extension AuthorViewController{
+    
+    func storageUploadImage(_ imagen: UIImage){
+        do{
+            let credentials = AZSStorageCredentials(accountName: "icapastorage",
+            accountKey: "OypqXXmQZVCDfO340/VJQ4jvHf7yinX1QTIUnBwcx4CLWhgI59CvckjkOSnhEyPxvymAY0dMrAX9rVDs8VRSKg==")
+            let account = try AZSCloudStorageAccount(credentials: credentials, useHttps: true)
+    
+            blobClient = account.getBlobClient()
+        
+            let blobContainer = blobClient?.containerReference(fromName: "posts")
+            
+            let newIDFile = UUID().uuidString
+            
+            
+            
+            let myBlob = blobContainer?.blockBlobReference(fromName: newIDFile)
+            myBlob?.upload(from: UIImageJPEGRepresentation(imagen, 0.5)!, completionHandler: { (error) in
+                if error != nil{
+                    print(error)
+                    return
+                }
+                // Ha subido la imagen bien, actualizo el modelo
+                self.model?["photo"] = newIDFile as AnyObject?
+                
+                DispatchQueue.main.async {
+                    //-- Aqui deberia de escalarla, lo hice en la otra practica
+                    let  imgRes = imagen.resizeWith(width: self.imagePosts.bounds.height)
+                    self.imagePosts.image = imgRes
+                    
+                }
+            })
+            
+        }
+        catch let error{
+            print(error)
+        }
+        
+    }
+    
+    func getPhotoPost()  {
+        // Esta descarga la photo y la pone en el cuadro, si existe
+        let foto = self.model?["photo"] as? String
+        if foto != nil{
+            if !((foto?.isEmpty)!){
+                // Recogemos el blob
+                
+                let credentials = AZSStorageCredentials(accountName: "icapastorage",
+                                                        accountKey: "OypqXXmQZVCDfO340/VJQ4jvHf7yinX1QTIUnBwcx4CLWhgI59CvckjkOSnhEyPxvymAY0dMrAX9rVDs8VRSKg==")
+                
+                let account = try! AZSCloudStorageAccount(credentials: credentials, useHttps: true)
+                
+                blobClient = account.getBlobClient()
+
+                
+                
+                let blobContainer = blobClient?.containerReference(fromName: "posts")
+                
+                let blob = AZSCloudBlockBlob(container: blobContainer!, name: foto!)
+                
+                blob.downloadToData(completionHandler: { (error, data) in
+                    if let _ = error {
+                        print(error)
+                        return
+                    }
+                    if let _ = data {
+                        let img = UIImage(data: data!)
+                        print("Imagen leida OK")
+                        DispatchQueue.main.async {
+                            let resIm = img?.resizeWith(width: self.imagePosts.bounds.height)
+                            self.imagePosts.image = resIm
+                            
+                            
+                        }
+                    }
+                })
+                
+            }
+        }
+    }
+}
+

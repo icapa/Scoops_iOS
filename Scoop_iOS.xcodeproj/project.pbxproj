@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CF1148071DC3F8A900EEE7F8 /* UIImage+Resize.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF1148061DC3F8A900EEE7F8 /* UIImage+Resize.swift */; };
+		CF11480B1DC419EE00EEE7F8 /* PostCellTableViewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF1148091DC419EE00EEE7F8 /* PostCellTableViewTableViewCell.swift */; };
+		CF11480C1DC419EE00EEE7F8 /* PostCellTableViewTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CF11480A1DC419EE00EEE7F8 /* PostCellTableViewTableViewCell.xib */; };
+		CF11480F1DC421AC00EEE7F8 /* starOff.png in Resources */ = {isa = PBXBuildFile; fileRef = CF11480D1DC421AC00EEE7F8 /* starOff.png */; };
+		CF1148101DC421AC00EEE7F8 /* starOn.png in Resources */ = {isa = PBXBuildFile; fileRef = CF11480E1DC421AC00EEE7F8 /* starOn.png */; };
 		CFEAB9151DC0063600F0C01E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFEAB9141DC0063600F0C01E /* AppDelegate.swift */; };
 		CFEAB91A1DC0063600F0C01E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CFEAB9181DC0063600F0C01E /* Main.storyboard */; };
 		CFEAB91C1DC0063600F0C01E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CFEAB91B1DC0063600F0C01E /* Assets.xcassets */; };
@@ -27,6 +32,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		CF1148061DC3F8A900EEE7F8 /* UIImage+Resize.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Resize.swift"; sourceTree = "<group>"; };
+		CF1148091DC419EE00EEE7F8 /* PostCellTableViewTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostCellTableViewTableViewCell.swift; sourceTree = "<group>"; };
+		CF11480A1DC419EE00EEE7F8 /* PostCellTableViewTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PostCellTableViewTableViewCell.xib; sourceTree = "<group>"; };
+		CF11480D1DC421AC00EEE7F8 /* starOff.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = starOff.png; sourceTree = "<group>"; };
+		CF11480E1DC421AC00EEE7F8 /* starOn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = starOn.png; sourceTree = "<group>"; };
 		CFEAB9111DC0063600F0C01E /* Scoop_iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Scoop_iOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CFEAB9141DC0063600F0C01E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CFEAB9191DC0063600F0C01E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -64,9 +74,30 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		CF1148051DC3F88600EEE7F8 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				CF1148061DC3F8A900EEE7F8 /* UIImage+Resize.swift */,
+			);
+			name = Extensions;
+			sourceTree = "<group>";
+		};
+		CF1148081DC419C300EEE7F8 /* CustomCell */ = {
+			isa = PBXGroup;
+			children = (
+				CF1148091DC419EE00EEE7F8 /* PostCellTableViewTableViewCell.swift */,
+				CF11480A1DC419EE00EEE7F8 /* PostCellTableViewTableViewCell.xib */,
+			);
+			name = CustomCell;
+			sourceTree = "<group>";
+		};
 		CFEAB9081DC0063600F0C01E = {
 			isa = PBXGroup;
 			children = (
+				CF11480D1DC421AC00EEE7F8 /* starOff.png */,
+				CF11480E1DC421AC00EEE7F8 /* starOn.png */,
+				CF1148081DC419C300EEE7F8 /* CustomCell */,
+				CF1148051DC3F88600EEE7F8 /* Extensions */,
 				CFF969D01DC10E0100DB850C /* MyApp-Bridging-Header.h */,
 				CFF969D51DC1431600DB850C /* AZSClient.framework */,
 				CFF969CB1DC10D7900DB850C /* MicrosoftAzureMobile.framework */,
@@ -189,9 +220,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CF11480C1DC419EE00EEE7F8 /* PostCellTableViewTableViewCell.xib in Resources */,
 				CFEAB9341DC00ECE00F0C01E /* AnonymousDetailViewController.xib in Resources */,
 				CFEAB91F1DC0063600F0C01E /* LaunchScreen.storyboard in Resources */,
+				CF11480F1DC421AC00EEE7F8 /* starOff.png in Resources */,
 				CFEAB91C1DC0063600F0C01E /* Assets.xcassets in Resources */,
+				CF1148101DC421AC00EEE7F8 /* starOn.png in Resources */,
 				CFEAB91A1DC0063600F0C01E /* Main.storyboard in Resources */,
 				CFEAB92A1DC0068500F0C01E /* IntroViewController.xib in Resources */,
 				CFEAB9391DC015CD00F0C01E /* AuthorViewController.xib in Resources */,
@@ -210,6 +244,8 @@
 				CFEAB9381DC015CD00F0C01E /* AuthorViewController.swift in Sources */,
 				CFEAB9331DC00ECE00F0C01E /* AnonymousDetailViewController.swift in Sources */,
 				CFEAB92C1DC00D6900F0C01E /* AnonymousTableViewController.swift in Sources */,
+				CF1148071DC3F8A900EEE7F8 /* UIImage+Resize.swift in Sources */,
+				CF11480B1DC419EE00EEE7F8 /* PostCellTableViewTableViewCell.swift in Sources */,
 				CFEAB9291DC0068500F0C01E /* IntroViewController.swift in Sources */,
 				CFF969D21DC1202F00DB850C /* AutorTableViewController.swift in Sources */,
 			);

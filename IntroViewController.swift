@@ -71,7 +71,6 @@ class IntroViewController: UIViewController {
             }else{
                 // Load writer view controller
                 DispatchQueue.main.async{
-                    self.title = "Authenticated client"
                     self.launchAuthorView()
                 }
                 return

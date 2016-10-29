@@ -82,11 +82,11 @@ class AutorTableViewController: UITableViewController {
     func addPost(sender: AnyObject){
         // Creamos un modelo vacío que valga
         let fakeModel : AuthorRecord =
-            ["title":"" as AnyObject,
-             "author":"" as AnyObject,
+            ["title":"Title" as AnyObject,
+             "author":"Author" as AnyObject,
              "published":false as AnyObject,
              "wantPublish":false as AnyObject,
-             "text":"" as AnyObject]
+             "text":"Text" as AnyObject]
         
         
         let detailVC = AuthorViewController(client!, model: fakeModel)

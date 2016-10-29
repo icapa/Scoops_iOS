@@ -3,16 +3,18 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AuthorViewController" customModule="Scoop_iOS" customModuleProvider="target">
             <connections>
+                <outlet property="imagePosts" destination="wbi-Cz-JGQ" id="d1r-rg-gm6"/>
                 <outlet property="publishButton" destination="RQp-Gi-Ebq" id="gAP-5O-JV1"/>
+                <outlet property="ratePostText" destination="o0O-zM-TY7" id="5o1-PK-2tc"/>
                 <outlet property="updateInserPost" destination="HiX-L0-gNn" id="d6k-w5-ucH"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
                 <outlet property="viewPostAuthor" destination="r9y-iU-N93" id="DYU-rV-lr2"/>
-                <outlet property="viewPostGeo" destination="eJK-kA-pib" id="tgk-21-b4x"/>
                 <outlet property="viewPostText" destination="Bej-BY-u5p" id="0iD-GP-Xze"/>
                 <outlet property="viewPostTitle" destination="LAJ-WW-lKI" id="cmf-v7-L8w"/>
             </connections>
@@ -29,20 +31,33 @@
                                 <action selector="updateInsertPost:" destination="-1" id="Wpd-Gd-O4Z"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem style="plain" systemItem="flexibleSpace" id="Yer-au-pIo"/>
-                        <barButtonItem title="Add Localization" id="rON-bm-Mhw"/>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="fIW-aC-POj"/>
+                        <barButtonItem systemItem="camera" id="cXg-1g-2ra">
+                            <connections>
+                                <action selector="addPhoto:" destination="-1" id="Ixu-EP-Sfk"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="Vdt-VD-Itq"/>
                         <barButtonItem title="Publish" id="RQp-Gi-Ebq"/>
                     </items>
                 </toolbar>
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="5p5-6J-XEn">
                     <subviews>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="wbi-Cz-JGQ">
+                            <constraints>
+                                <constraint firstAttribute="height" constant="128" id="U4Q-X2-VGa"/>
+                                <constraint firstAttribute="width" secondItem="wbi-Cz-JGQ" secondAttribute="height" multiplier="375:128" id="qSI-wT-Aar"/>
+                            </constraints>
+                        </imageView>
                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Post title" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="LAJ-WW-lKI">
                             <nil key="textColor"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="20"/>
                             <textInputTraits key="textInputTraits"/>
                         </textField>
                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Author" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="r9y-iU-N93">
+                            <constraints>
+                                <constraint firstAttribute="height" constant="18" id="icF-Q7-eht"/>
+                            </constraints>
                             <nil key="textColor"/>
                             <fontDescription key="fontDescription" type="italicSystem" pointSize="12"/>
                             <textInputTraits key="textInputTraits"/>
@@ -53,11 +68,11 @@
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                         </textView>
-                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="GPS: Localization disabled" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="eJK-kA-pib">
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="o0O-zM-TY7">
+                            <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                             <nil key="textColor"/>
-                            <fontDescription key="fontDescription" type="italicSystem" pointSize="14"/>
-                            <textInputTraits key="textInputTraits"/>
-                        </textField>
+                            <nil key="highlightedColor"/>
+                        </label>
                     </subviews>
                     <constraints>
                         <constraint firstItem="Bej-BY-u5p" firstAttribute="leading" secondItem="5p5-6J-XEn" secondAttribute="leading" id="J1P-LJ-wDK"/>
@@ -67,13 +82,11 @@
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstAttribute="trailing" secondItem="5p5-6J-XEn" secondAttribute="trailing" id="419-CH-4UZ"/>
                 <constraint firstAttribute="trailing" secondItem="5p5-6J-XEn" secondAttribute="trailing" id="7p9-vp-dEa"/>
                 <constraint firstItem="5p5-6J-XEn" firstAttribute="leading" secondItem="xpb-Wd-0eF" secondAttribute="leading" id="BHn-eB-iu7"/>
-                <constraint firstItem="5p5-6J-XEn" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="C2N-Lh-Xbu"/>
-                <constraint firstAttribute="bottom" secondItem="eJK-kA-pib" secondAttribute="bottom" constant="79" id="Fla-Gu-tXC"/>
                 <constraint firstItem="5p5-6J-XEn" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="NUN-OE-nfR"/>
                 <constraint firstItem="5p5-6J-XEn" firstAttribute="trailing" secondItem="xpb-Wd-0eF" secondAttribute="trailing" id="Uax-Gx-oNo"/>
+                <constraint firstAttribute="bottom" secondItem="xpb-Wd-0eF" secondAttribute="bottom" id="txU-3e-kTf"/>
                 <constraint firstItem="xpb-Wd-0eF" firstAttribute="top" secondItem="5p5-6J-XEn" secondAttribute="bottom" constant="35" id="xS7-Nx-Cdt"/>
                 <constraint firstItem="5p5-6J-XEn" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="83" id="zs8-OB-ifl"/>
             </constraints>
