@@ -82,7 +82,7 @@ class AnonymousTableViewController: UITableViewController {
         cell?.postAuthor.text = (item?["author"] as! String)
         let fecha = item?["updatedAt"] as! Date
         let fechaFormat = DateFormatter()
-        fechaFormat.dateStyle = .long
+        fechaFormat.dateStyle = .full
         let f = fechaFormat.string(from: fecha)
         
         cell?.postDate.text = f
@@ -124,7 +124,7 @@ class AnonymousTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat{
-        return 85
+        return 90
     }
     
     

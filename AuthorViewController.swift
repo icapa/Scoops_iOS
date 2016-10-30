@@ -18,6 +18,7 @@ class AuthorViewController: UIViewController {
     
     var blobClient : AZSCloudBlobClient?
     
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var ratePostText: UILabel!
     
     @IBOutlet weak var imagePosts: UIImageView!
@@ -35,6 +36,7 @@ class AuthorViewController: UIViewController {
     @IBOutlet weak var updateInserPost: UIBarButtonItem!
     
     @IBAction func updateInsertPost(_ sender: AnyObject) {
+        waitActivity()
         if (model?["id"] == nil){
             addPosts()
         }else{
@@ -62,7 +64,7 @@ class AuthorViewController: UIViewController {
     @IBAction func publishAction(_ sender: AnyObject) {
         let pub = model?["published"] as! Bool
         let want = model?["wantPublish"] as! Bool
-        
+        waitActivity()
         // Change the status
         publishPost(!(pub||want))
         
@@ -88,6 +90,8 @@ class AuthorViewController: UIViewController {
     // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.view.bringSubview(toFront: self.activityIndicator)
+        
         
         // Do any additional setup after loading the view.
     }
@@ -95,9 +99,7 @@ class AuthorViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         syncViewWithModel()
-        
-        // Voy a probar
-       
+        waitActivity()
         getPhotoPost()
         
         
@@ -110,7 +112,7 @@ class AuthorViewController: UIViewController {
         self.viewPostAuthor.text = model?["author"] as! String?
         self.viewPostText.text = model?["text"] as! String!
         
-        let rateS = String.init(format: "Rate: %d/5", model?["rate"] as! Int)
+        let rateS = String.init(format: "Rate: %d/5 of %d reads", model?["rate"] as! Int, model?["numRates"] as! Int)
         
         
         self.ratePostText.text = rateS
@@ -150,6 +152,7 @@ class AuthorViewController: UIViewController {
                 DispatchQueue.main.async {
                     self.model?["wantPublish"] = pub as AnyObject?
                     self.syncViewWithModel()
+                   
                 }
 
             }
@@ -160,6 +163,7 @@ class AuthorViewController: UIViewController {
                 }
 
             }
+            self.finishActivity()
         }
         
     }
@@ -186,6 +190,7 @@ class AuthorViewController: UIViewController {
                           parameters: json,
                           headers: nil,
                           completion: { (data, response, error) in
+                            self.finishActivity()
                             if let _ = error{
                                 print(error)
                                 
@@ -195,6 +200,7 @@ class AuthorViewController: UIViewController {
                                 
                                 let _ = self.navigationController?.popViewController(animated: true)
                             }
+                            
         })
         
         
@@ -235,6 +241,7 @@ class AuthorViewController: UIViewController {
                 }
                 
             }
+            self.finishActivity()
         }
         
     }
@@ -272,23 +279,26 @@ extension AuthorViewController{
             myBlob?.upload(from: UIImageJPEGRepresentation(imagen, 0.5)!, completionHandler: { (error) in
                 if error != nil{
                     print(error)
-                    return
-                }
-                // Ha subido la imagen bien, actualizo el modelo
-                self.model?["photo"] = newIDFile as AnyObject?
-                
-                DispatchQueue.main.async {
-                    //-- Aqui deberia de escalarla, lo hice en la otra practica
-                    let  imgRes = imagen.resizeWith(width: self.imagePosts.bounds.height)
-                    self.imagePosts.image = imgRes
                     
+                }else{
+                    // Ha subido la imagen bien, actualizo el modelo
+                    self.model?["photo"] = newIDFile as AnyObject?
+                    
+                    DispatchQueue.main.async {
+                        //-- Aqui deberia de escalarla, lo hice en la otra practica
+                        let  imgRes = imagen.resizeWith(width: self.imagePosts.bounds.height)
+                        self.imagePosts.image = imgRes
+                        
+                    }
                 }
+                self.finishActivity()
             })
             
         }
         catch let error{
             print(error)
         }
+        
         
     }
     
@@ -315,22 +325,43 @@ extension AuthorViewController{
                 blob.downloadToData(completionHandler: { (error, data) in
                     if let _ = error {
                         print(error)
-                        return
-                    }
-                    if let _ = data {
-                        let img = UIImage(data: data!)
-                        print("Imagen leida OK")
-                        DispatchQueue.main.async {
-                            let resIm = img?.resizeWith(width: self.imagePosts.bounds.height)
-                            self.imagePosts.image = resIm
-                            
-                            
+                        
+                    }else{
+                        if let _ = data {
+                            let img = UIImage(data: data!)
+                            print("Imagen leida OK")
+                            DispatchQueue.main.async {
+                                let resIm = img?.resizeWith(width: self.imagePosts.bounds.height)
+                                self.imagePosts.image = resIm
+                                
+                                
+                            }
                         }
                     }
+                    self.finishActivity()
                 })
                 
             }
         }
     }
+}
+
+//MARK: - Presentation
+extension AuthorViewController{
+    func waitActivity(){
+        DispatchQueue.main.async {
+            self.activityIndicator.isHidden = false
+            self.activityIndicator.startAnimating()
+        }
+        
+    }
+    func finishActivity(){
+        DispatchQueue.main.async {
+            self.activityIndicator.isHidden = true
+            self.activityIndicator.stopAnimating()
+        }
+        
+    }
+    
 }
 

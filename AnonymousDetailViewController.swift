@@ -17,16 +17,12 @@ class AnonymousDetailViewController: UIViewController {
     
     @IBOutlet weak var postImage: UIImageView!
 
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var segmentedRates: UISegmentedControl!
     @IBOutlet weak var textComplete: UITextView!
     @IBOutlet weak var labelAuthor: UILabel!
     @IBOutlet weak var labelTitle: UILabel!
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-    }
-
+   
     //MARK: - Init
     init(_ client: MSClient){
         self.client = client
@@ -46,8 +42,15 @@ class AnonymousDetailViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         syncViewWithModel()
+        waitActivity()
         getPhotoPost(model!)
     }
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        self.view.bringSubview(toFront: self.activityIndicator)
+    }
+
     
     
    //MARK: - Sync
@@ -69,6 +72,7 @@ class AnonymousDetailViewController: UIViewController {
     
     @IBAction func rate(_ sender: AnyObject) {
         print("Enviando valoracion \(segmentedRates.selectedSegmentIndex+1)")
+        waitActivity()
         ratePost(segmentedRates.selectedSegmentIndex+1)
     }
     
@@ -95,6 +99,7 @@ class AnonymousDetailViewController: UIViewController {
                     print("SE HA HECHO BIEN EL POST")
                 }
             }
+            self.finishActivity()
         }
 
     }
@@ -131,28 +136,48 @@ extension AnonymousDetailViewController{
                 blob.downloadToData(completionHandler: { (error, data) in
                     if let _ = error {
                         print(error)
-                        return
-                    }
-                    if let _ = data {
                         
-                        let img = UIImage(data: data!)
-                        
-                        let imgRes = img?.resizeWith(width: self.postImage.bounds.width)
-                        
-                    
-                        print("Imagen leida OK")
-                        DispatchQueue.main.async {
-                            //
-                            print("Descargo la imagen \(img?.description)")
-                            self.postImage.image = imgRes!
+                    }else{
+                        if let _ = data {
+                            
+                            let img = UIImage(data: data!)
+                            
+                            let imgRes = img?.resizeWith(width: self.postImage.bounds.width)
+                            
+                            
+                            print("Imagen leida OK")
+                            DispatchQueue.main.async {
+                                //
+                                print("Descargo la imagen \(img?.description)")
+                                self.postImage.image = imgRes!
+                            }
+                            
+                            
                         }
-                        
-                        
                     }
+                    self.finishActivity()
                 })
                 
             }
         }
+    }
+    
+}
+//MARK: - Presentation
+extension AnonymousDetailViewController{
+    func waitActivity(){
+        DispatchQueue.main.async {
+            self.activityIndicator.isHidden = false
+            self.activityIndicator.startAnimating()
+        }
+        
+    }
+    func finishActivity(){
+        DispatchQueue.main.async {
+            self.activityIndicator.isHidden = true
+            self.activityIndicator.stopAnimating()
+        }
+        
     }
     
 }

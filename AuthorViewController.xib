@@ -9,6 +9,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AuthorViewController" customModule="Scoop_iOS" customModuleProvider="target">
             <connections>
+                <outlet property="activityIndicator" destination="4pS-5H-QFk" id="rQL-7l-8NE"/>
                 <outlet property="imagePosts" destination="wbi-Cz-JGQ" id="d1r-rg-gm6"/>
                 <outlet property="publishButton" destination="RQp-Gi-Ebq" id="gAP-5O-JV1"/>
                 <outlet property="ratePostText" destination="o0O-zM-TY7" id="5o1-PK-2tc"/>
@@ -79,6 +80,11 @@
                         <constraint firstAttribute="trailing" secondItem="Bej-BY-u5p" secondAttribute="trailing" id="jRa-bm-O2R"/>
                     </constraints>
                 </stackView>
+                <activityIndicatorView contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="4pS-5H-QFk">
+                    <frame key="frameInset" minX="0.0%" minY="49.92%" width="375" height="34"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                    <color key="color" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                </activityIndicatorView>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
